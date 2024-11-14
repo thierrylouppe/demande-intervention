@@ -21,6 +21,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'structure',
+        'role',
     ];
 
     /**
@@ -44,5 +46,20 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function interventionRequests()
+    {
+        return $this->hasMany(InterventionRequest::class);
+    }
+
+    public function assignedRequests()
+    {
+        return $this->hasMany(InterventionRequest::class, 'technician_id');
+    }
+
+    public function reports()
+    {
+        return $this->hasMany(Report::class, 'manager_id');
     }
 }
